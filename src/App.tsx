@@ -95,7 +95,7 @@ function useDebounce<T>({ value, delay }: debounceProps<T>): T {
 }
 
 async function requestChikakuResult(time: string, text: string): Promise<string> {
-    const url = `https://chikaku.herokuapp.com/api/v1/chikaku?time=${time}&text=${text}`;
+    const url = `https://chikaku.herokuapp.com/?time=${time}&text=${text}`;
     const response = await fetch(url);
     const json = await response.json() as { result: string };
     return json.result;
