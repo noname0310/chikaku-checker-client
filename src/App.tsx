@@ -38,15 +38,6 @@ const InputDiv = styled.div`
     margin-bottom: 20px;
 `;
 
-const TimeInput = styled.input`
-    height: 30px;
-    width: 150px;
-    font-size: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    border: 1px solid #ffffff;
-`;
-
 const TextInput = styled.textarea`
     height: 140px;
     width: 100%;
@@ -94,8 +85,8 @@ function useDebounce<T>({ value, delay }: debounceProps<T>): T {
     return debouncedValue;
 }
 
-async function requestChikakuResult(time: string, text: string): Promise<string> {
-    const url = `https://chikaku.herokuapp.com/?time=${time}&text=${text}`;
+async function requestEvaluationResult(text: string): Promise<string> {
+    const url = `http://127.0.0.1:8080/?text=${encodeURIComponent(text)}`;
     const response = await fetch(url);
     const json = await response.json() as { result: string };
     return json.result;
@@ -106,23 +97,15 @@ function App(): JSX.Element {
 
     const debouncedText = useDebounce({ value: text, delay: 1000 });
     
-    const [time, setTime] = useState("");
     const [result, setResult] = useState("");
     
     useEffect(() => {
-        if (time == "") return;
         if (debouncedText == "") return;
 
-        requestChikakuResult(time, debouncedText).then(result => {
+        requestEvaluationResult(debouncedText).then(result => {
             setResult(result);
         });
-    }, [debouncedText, time]);
-
-    const timeChanged = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>): void => {
-            setTime(event.target.value);
-        }, [setTime]
-    );
+    }, [debouncedText]);
 
     const inputFieldChange = useCallback(
         (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
@@ -133,9 +116,8 @@ function App(): JSX.Element {
     return (
         <MainContainer>
             <Window>
-                <Title>지각 사유</Title>
+                <Title>글 평가</Title>
                 <InputDiv>
-                    <TimeInput type="time" value={time} onChange={timeChanged} />
                     <TextInput placeholder="Type here..." onInput={inputFieldChange} />
                 </InputDiv>
                 <Text>{result}</Text>
