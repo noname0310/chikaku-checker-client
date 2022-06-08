@@ -1,5 +1,5 @@
 {
-    "name": "chikaku-checker-client",
+    "name": "text-evaluator-client",
     "version": "0.1.0",
     "private": true,
     "dependencies": {

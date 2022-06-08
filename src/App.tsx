@@ -120,7 +120,7 @@ function App(): JSX.Element {
                 <InputDiv>
                     <TextInput placeholder="Type here..." onInput={inputFieldChange} />
                 </InputDiv>
-                <Text>{result}</Text>
+                <Text>괜찮은 글일 확률: {result}</Text>
             </Window>
         </MainContainer>
     );
