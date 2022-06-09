@@ -86,7 +86,7 @@ function useDebounce<T>({ value, delay }: debounceProps<T>): T {
 }
 
 async function requestEvaluationResult(text: string): Promise<string> {
-    const url = `http://text-evaluator.run.goorm.io/?text=${encodeURIComponent(text)}`;
+    const url = `https://text-evaluator.run.goorm.io/?text=${encodeURIComponent(text)}`;
     const response = await fetch(url);
     const json = await response.json() as { result: string };
     return json.result;
